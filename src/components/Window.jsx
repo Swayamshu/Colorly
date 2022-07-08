@@ -1,12 +1,10 @@
+import React from 'react';
 import { Routes, Route } from "react-router-dom";
-import { Popular } from "./Popular";
-import { Generate } from "./Generate";
-import { Random } from "./Random";
-import { Collection } from "./Collection";
+import { Popular, Generate, Random, Collection } from '.';
 
-export const Window = () => {
+const Window = () => {
     return (
-        <div className="window">
+        <div className="window"> 
             <Routes>
                 <Route
                     path="/"
@@ -25,6 +23,8 @@ export const Window = () => {
                     element={<Collection />}
                 />
             </Routes>
-        </div>
+        </div>  
     )
-}
+};
+
+export default Window;

@@ -1,20 +1,63 @@
 import { AiOutlineHeart as Heart, AiFillHeart as FilledHeart } from 'react-icons/ai';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { toast } from 'react-toastify';
+import axios from '../utils/axios';
+import { useAuth } from '../context/auth';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-export const Palette = (props) => {
-    // const colors = [
-    //     "#251D3A",
-    //     "#2A2550",
-    //     "#E04D01",
-    //     "#FF7700",
-    // ]
+const Palette = (props) => {
+    const { userId } = useAuth();
     const colors = props.colors;
     const width = props.width;
+    const [paletteId, setPaletteId] = useState(props.paletteId);
     const [likeCount, setLikeCount] = useState(props.likes);
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(props.likeState);
+
+    const likeToggle = (likeState) => {
+        if (likeState) {
+            toast.info("Palette unsaved!"); 
+        } else {
+            toast.success("Palette saved!");
+        }
+        setLiked(prevState => !prevState);
+        setLikeCount(prevCount => {
+            if (likeState) return prevCount - 1;
+            return prevCount + 1;
+        });
+
+        const paletteData = {
+            paletteId: paletteId,
+            colors: colors,
+            likedByUser: userId,
+            likes: likeCount,
+        }
+        
+        if (likeState === false) {
+            axios.patch("/palette", paletteData)
+                .then((res) => {
+                    console.log("saved");
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    toast.error(err.response.data);
+                });   
+        } else {
+            axios.patch("/palette/unsave", paletteData)
+                .then((res) => {
+                    console.log("unsaved");
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    toast.error(err.response.data);
+                });   
+        }
+    }
 
     const copy = (str) => {
-        console.log(str, "copied!");
+        // const copyTimeout = setTimeout(() => {
+        //     const element = 
+        // })
+        toast.success("Color Copied!");
     }
 
     return (
@@ -34,12 +77,14 @@ export const Palette = (props) => {
                         width: `${width}vh`
                     }}
                 >
-                    <span 
-                        onClick={() => copy(colors[0])}
-                        className="color-link"
+                    <CopyToClipboard
+                        text={colors[0]}
+                        onCopy={() => copy(colors[0])}
                     >
-                        {colors[0]}
-                    </span>
+                        <span className="color-link">
+                            {colors[0]}
+                        </span>
+                    </CopyToClipboard>
                 </div>
                 <div 
                     className="color" 
@@ -49,12 +94,14 @@ export const Palette = (props) => {
                         width: `${width}vh`
                     }}
                 >
-                    <span 
-                        onClick={() => copy(colors[1])}
-                        className="color-link"
+                    <CopyToClipboard
+                        text={colors[1]}
+                        onCopy={() => copy(colors[1])}
                     >
-                        {colors[1]}
-                    </span>
+                        <span className="color-link">
+                            {colors[1]}
+                        </span>
+                    </CopyToClipboard>
                 </div>
                 <div 
                     className="color" 
@@ -64,12 +111,14 @@ export const Palette = (props) => {
                         width: `${width}vh`
                     }}
                 >
-                    <span 
-                        onClick={() => copy(colors[2])}
-                        className="color-link"
+                    <CopyToClipboard
+                        text={colors[2]}
+                        onCopy={() => copy(colors[2])}
                     >
-                        {colors[2]}
-                    </span>
+                        <span className="color-link">
+                            {colors[2]}
+                        </span>
+                    </CopyToClipboard>
                 </div>
                 <div 
                     className="color" 
@@ -79,17 +128,19 @@ export const Palette = (props) => {
                         width: `${width}vh`
                     }}
                 >
-                    <span 
-                        onClick={() => copy(colors[3])}
-                        className="color-link"
+                    <CopyToClipboard
+                        text={colors[3]}
+                        onCopy={() => copy(colors[3])}
                     >
-                        {colors[3]}
-                    </span>
+                        <span className="color-link">
+                            {colors[3]}
+                        </span>
+                    </CopyToClipboard>
                 </div>
             </div>
 
             <div className="palette-like">
-                <div>
+                <div onClick={() => likeToggle(liked)}>
                     {(liked) ? <FilledHeart /> : <Heart />}
                 </div>
                 <div className="likes-count">
@@ -99,3 +150,5 @@ export const Palette = (props) => {
         </div>
     )
 }
+
+export default Palette;

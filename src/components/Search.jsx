@@ -1,7 +1,9 @@
-export const Search = (props) => {
+const Search = (props) => {
     return (
         <input className="search-box" >
             {props.children}
         </input>
     )
-}
+};
+
+export default Search;

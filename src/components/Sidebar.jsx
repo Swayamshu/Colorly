@@ -1,28 +1,37 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { useAuth } from "../context/auth";
 
-export const Sidebar = () => {
+const Sidebar = () => {
     let navigate = useNavigate();
-
-    const routeChange = (path) => {
-        navigate(path);
-    }
+    const { logout } = useAuth();
 
     return (
         <div className="sidebar">
             <ul className="sidebar-navs">
-                <li onClick={() => routeChange("/")}>
+                <li onClick={() => navigate("/")}>
                     Popular
                 </li>
-                <li onClick={() => routeChange("/Generate")}>
+                <li onClick={() => navigate("/Generate")}>
                     Generate
                 </li>
-                <li onClick={() => routeChange("/Random")}>
+                <li onClick={() => navigate("/Random")}>
                     Random
                 </li>
-                <li onClick={() => routeChange("/Collection")}>
+                <li onClick={() => navigate("/Collection")}>
                     Collection
                 </li>
             </ul>
+            <div onClick={() => navigate("/login")}>
+                Login
+            </div>
+            <div onClick={() => {
+                logout();
+                navigate("/login");
+            }}>
+                Logout
+            </div>
         </div>
     )
-}
+};
+
+export default Sidebar;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Palette } from "./Palette";
+import { Palette } from "./";
 
-export const Random = () => {
+const Random = () => {
     const paletteWidth = 130 / 3;
     const [paletteType, setPaletteType] = useState("Random");
     const [randomPalettes, setRandomPalettes] = useState([]);
@@ -32,12 +32,12 @@ export const Random = () => {
     
     return (
         <div>
-            <div class="dropdown">
-                <button class="dropbtn">{paletteType}</button>
-                <div class="dropdown-content">
-                    <a href="#">Link 1</a>
-                    <a href="#">Link 2</a>
-                    <a href="#">Link 3</a>
+            <div className="dropdown">
+                <button className="dropbtn">{paletteType}</button>
+                <div className="dropdown-content">
+                    <a href="/temp">Link 1</a>
+                    <a href="/temp">Link 2</a>
+                    <a href="/temp">Link 3</a>
                 </div>
             </div>
             <div className="container">
@@ -46,10 +46,15 @@ export const Random = () => {
                         key={i}
                         colors={palette.palette}
                         width={paletteWidth}
-                        likes={Math.floor(Math.random()*1000)}
+                        likes={0}
+                        paletteId=""
+                        tags=""
+                        likeState={false}
                     />
                 )}
             </div>
         </div>
     )
 }
+
+export default Random;

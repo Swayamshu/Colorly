@@ -1,8 +1,8 @@
-import { Navbar } from "react-bootstrap"
 import { Search } from "./Search"
 import { useNavigate } from "react-router-dom";
+// import logo from "../assets/logo.svg";
 
-export const Header = () => {
+const Header = () => {
     let navigate = useNavigate();
 
     const routeChange = (path) => {
@@ -12,10 +12,10 @@ export const Header = () => {
     return (
         <div className="navbar">
             <div
-                style={{cursor:"pointer"}}
+                className="logo"
                 onClick={() => routeChange("/")}
             >
-                Colors
+                coolor.io
             </div>
             <input
                 className="search-box"
@@ -25,4 +25,6 @@ export const Header = () => {
             </input>
         </div>
     )
-}
+};
+
+export default Header;

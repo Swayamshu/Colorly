@@ -1,9 +1,9 @@
-import { Palette } from "./Palette";
+import { Palette } from "./";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export const Popular = () => {
-     const colors = [
+const Popular = () => {
+    const colors = [
         "#251D3A",
         "#2A2550",
         "#E04D01",
@@ -32,7 +32,7 @@ export const Popular = () => {
         axios.request(options)
             .then(res => {
                 setPopularPalettes(res.data);
-                // console.log(res.data);
+                console.log(res.data[0]);
             })
             .catch(err => {
                 console.error(err);
@@ -42,15 +42,20 @@ export const Popular = () => {
     return (
         <div>
             <div className="container">
-                {popularPalettes.map((palette, i) => 
+                {popularPalettes.map((palette, i) =>
                     <Palette
                         key={i}
                         colors={palette.colors}
                         width={paletteWidth}
-                        likes={Math.floor(Math.random()*1000)}    
+                        likes={0}
+                        paletteId={palette.code}
+                        tags={palette.tags}
+                        likeState={false}
                     />
                 )}
             </div>
         </div>
     )
-}
+};
+
+export default Popular;
