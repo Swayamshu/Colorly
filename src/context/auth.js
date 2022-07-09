@@ -40,7 +40,6 @@ export const AuthProvider = ({ children }) => {
             .then((res) => {
                 setUserId(res.data.userId);
                 setProfileName(res.data.name);
-                console.log(profileName);
             })
             .catch((err) => {
                 toast.error(err.response.data);

@@ -10,7 +10,7 @@ const Generate = () => {
     const [likeCount, setLikeCount] = useState(0);
     const [likeState, setLikeState] = useState(false);
     const [options, setOptions] = useState(["N", "N", "N", "N", "N"]);
-    const [color, setColor] = useState("Color");
+    const [color, setColor] = useState("#000000");
     const [rgb, setRgb] = useState([0, 0, 0]);
 
     const componentToHex = (c) => {
@@ -38,7 +38,6 @@ const Generate = () => {
         var data = {
             model: "default",
             input: options,
-            // input : [[44,43,44],[90,83,82],"N","N","N"],
         };
         http.onreadystatechange = function () {
             if (http.readyState === 4 && http.status === 200) {
@@ -63,14 +62,13 @@ const Generate = () => {
         return () => {
             window.removeEventListener("keydown", keyDownHandler);
         }
-    }, [])
+    }, [options, likeCount, likeState])
     
     const keyDownHandler = (e) => {
         if (e.code === "Space") {
             getNewPalette();
             setLikeCount(0);
             setLikeState(false);
-            console.log(likeState, likeCount);
         }
     }
 
@@ -78,16 +76,26 @@ const Generate = () => {
         const hex = e.target.value;
         setColor(hex);
         setRgb(hexToRgb(hex));
-        console.log(rgb, color)
     }
-
+    
     const handleAdd = () => {
-        const newOptions = options;
-        
+        const newOptions = options.filter(rgb => rgb !== "N");
+        if (newOptions.length < 5) {
+            newOptions.push(hexToRgb(color));
+            setOptions(newOptions);
+        }
     }
 
-    const handleRemove = () => {
-
+    const handleRemove = (i) => {
+        let newOptions = options;
+        newOptions.splice(i, 1);
+        if (newOptions.length === 0) {
+            newOptions = ["N", "N", "N", "N", "N"];
+        }
+        setOptions(newOptions);
+        getNewPalette();
+        setLikeCount(0);
+        setLikeState(false);
     }
     
     return (
@@ -109,16 +117,16 @@ const Generate = () => {
                 }
             </div>
             <div className="generate-options-container">
-                <div>Add upto 5 colors:</div>
+                <div className="generate-desc">Hit the Spacebar to generate palettes!<br/><br/>Add upto 5 colors and generate colour palettes based on added colours.</div>
                 <div className="generate-add">
                     <div style={{ display: "flex", alignItems: "center", maxWidth: "fit-content" }}>
-                        <div>{color}</div>
                         <input
                             type="color"
                             value={color}
                             onChange={(e) => handleColorChange(e)}
                             className="color-picker"
                         />
+                        <div>{color}</div>
                     </div>
                     <div
                         className="add-remove"
@@ -129,12 +137,19 @@ const Generate = () => {
                 </div>
                 <div>Added Colors:</div>
                 <div className="generate-added-colors">
-                    {options.filter(color => color === "N").map((color, i) => 
+                    {options.filter(color => color !== "N").map((color, i) => 
                         <div key={i}>
-                            <div>{color}</div>
+                            <div style={{ display: "flex", alignItems: "center", maxWidth: "fit-content" }}>
+                                <div
+                                    className="color-picker"
+                                    style={{ backgroundColor: rgbToHex(color) }}
+                                >
+                                </div>
+                                <div>{rgbToHex(color)}</div>
+                            </div>
                             <div
                                 className="add-remove"
-                                onClick={handleRemove}
+                                onClick={() => handleRemove(i)}
                             >
                                 Remove
                             </div>

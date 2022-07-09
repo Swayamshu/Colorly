@@ -23,8 +23,7 @@ const Random = () => {
         setLoading(true);
         axios.request(options)
             .then(res => {
-                const data = res.data.data;
-                setRandomPalettes(data);
+                setRandomPalettes(res.data.data);
                 setPaletteType(res.data.type);
             })
             .catch(err => {
@@ -34,15 +33,7 @@ const Random = () => {
     }, []);
     
     return (
-        <div>
-            <div className="dropdown">
-                <button className="dropbtn">{paletteType}</button>
-                <div className="dropdown-content">
-                    <a href="/temp">Link 1</a>
-                    <a href="/temp">Link 2</a>
-                    <a href="/temp">Link 3</a>
-                </div>
-            </div>
+        <div className="random-container">
             <div className="container">
                 {loading ?
                     <div className="spinner">
@@ -61,6 +52,11 @@ const Random = () => {
                         />
                     )
                 }
+            </div>
+            <div className="random-options-container">
+                <div className="">
+                    <div className="palette-type">{paletteType.toUpperCase()}</div>
+                </div>
             </div>
         </div>
     )
