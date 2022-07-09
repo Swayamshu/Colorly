@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useAuth } from '../context/auth';
 import { toast } from 'react-toastify';
 import NoAuthRequired from '../middleware/noAuthRequired';
+import { ReactComponent as Logo } from "../assets/colory.svg"
 
 const Login = () => {
     let navigate = useNavigate();
@@ -45,28 +46,37 @@ const Login = () => {
 
     return (
         <NoAuthRequired>
-            <div>
-                <h1>Login</h1>
-                <input 
-                    type="email"
-                    placeholder="email"
-                    onChange={handleEmailChange}
-                    value={email}
-                />
-                <input 
-                    type="password"
-                    placeholder="password"
-                    onChange={handlePasswordChange}
-                    value={password}
-                />
-                <button 
-                    type="submit"
-                    onClick={login}
-                >
-                    Login
-                </button>
-                    
-                <div>Not registered yet? <a onClick={() => navigate("/register")}>Register</a></div>
+            <div className="auth-page">
+                <div className="auth-card">
+                    <div
+                        className="auth-logo-container"
+                        onClick={() => navigate("/")}
+                    >
+                        <Logo className="auth-logo" />
+                    </div>
+                    <div className="auth-header">Login</div>
+                    <input 
+                        type="email"
+                        placeholder="Email Address"
+                        onChange={handleEmailChange}
+                        value={email}
+                        className="auth-input"
+                    />
+                    <input 
+                        type="password"
+                        placeholder="Password"
+                        onChange={handlePasswordChange}
+                        value={password}
+                        className="auth-input"
+                    />
+                    <button 
+                        type="submit"
+                        onClick={login}
+                    >
+                        Login
+                    </button>
+                    <div className="auth-card-text">Not registered yet? <a onClick={() => navigate("/register")}>Register</a></div>
+                </div>
             </div>
         </NoAuthRequired>
     )

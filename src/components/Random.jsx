@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "../context/auth";
 import { Palette } from "./";
+import { TailSpin } from "react-loader-spinner";
 
 const Random = () => {
-    const paletteWidth = 130 / 3;
+    const { paletteWidth, loading, setLoading } = useAuth();
     const [paletteType, setPaletteType] = useState("Random");
     const [randomPalettes, setRandomPalettes] = useState([]);
 
@@ -18,16 +20,17 @@ const Random = () => {
     };
 
     useEffect(() => {
+        setLoading(true);
         axios.request(options)
             .then(res => {
                 const data = res.data.data;
                 setRandomPalettes(data);
                 setPaletteType(res.data.type);
-                // console.log(data);
             })
             .catch(err => {
                 console.error(err);
-            });
+            })
+            .finally(() => setLoading(false));
     }, []);
     
     return (
@@ -41,17 +44,23 @@ const Random = () => {
                 </div>
             </div>
             <div className="container">
-                {randomPalettes.map((palette, i) => 
-                    <Palette
-                        key={i}
-                        colors={palette.palette}
-                        width={paletteWidth}
-                        likes={0}
-                        paletteId=""
-                        tags=""
-                        likeState={false}
-                    />
-                )}
+                {loading ?
+                    <div className="spinner">
+                        <TailSpin width="80" color="#F23557"/>
+                    </div>
+                    :
+                    randomPalettes.map((palette, i) => 
+                        <Palette
+                            key={i}
+                            colors={palette.palette}
+                            width={paletteWidth}
+                            likes={0}
+                            paletteId=""
+                            tags=""
+                            likeState={false}
+                        />
+                    )
+                }
             </div>
         </div>
     )

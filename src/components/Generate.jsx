@@ -1,18 +1,17 @@
 import React from "react";
 import { Palette } from "./";
 import { useState, useEffect } from "react";
-// import uniqid from "uniqid";
+import { useAuth } from "../context/auth";
+import { TailSpin } from "react-loader-spinner";
 
 const Generate = () => {
-    const colors = [
-        "#F15412",
-        "#34B3F1",
-        "#FF06B7",
-        "#FFA500",
-    ]
+    const { loading, setLoading } = useAuth();
     const [palette, setPalette] = useState([]);
     const [likeCount, setLikeCount] = useState(0);
     const [likeState, setLikeState] = useState(false);
+    const [options, setOptions] = useState(["N", "N", "N", "N", "N"]);
+    const [color, setColor] = useState("Color");
+    const [rgb, setRgb] = useState([0, 0, 0]);
 
     const componentToHex = (c) => {
         var hex = c.toString(16);
@@ -23,14 +22,24 @@ const Generate = () => {
         return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
     }
 
-    var url = "http://colormind.io/api/";
-    var data = {
-        model: "default",
-        // input : [[44,43,44],[90,83,82],"N","N","N"]
+    const hexToRgb = (hex) => {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? [
+            parseInt(result[1], 16),
+            parseInt(result[2], 16),
+            parseInt(result[3], 16)
+        ] : null;
     }
+
+    var url = "http://colormind.io/api/";
     var http = new XMLHttpRequest();
 
     const getNewPalette = async () => {
+        var data = {
+            model: "default",
+            input: options,
+            // input : [[44,43,44],[90,83,82],"N","N","N"],
+        };
         http.onreadystatechange = function () {
             if (http.readyState === 4 && http.status === 200) {
                 var palette = JSON.parse(http.responseText).result;
@@ -39,6 +48,7 @@ const Generate = () => {
                     temp_palette.push(rgbToHex(rgb));
                 });
                 setPalette(temp_palette);
+                setLoading(false);
             }
         }
         http.open("POST", url, true);
@@ -47,15 +57,15 @@ const Generate = () => {
 
     useEffect(() => {
         window.addEventListener("keydown", keyDownHandler);
+        setLoading(true);
         getNewPalette();
 
         return () => {
             window.removeEventListener("keydown", keyDownHandler);
         }
-    }, [likeState])
+    }, [])
     
     const keyDownHandler = (e) => {
-        // console.log(e);
         if (e.code === "Space") {
             getNewPalette();
             setLikeCount(0);
@@ -63,17 +73,75 @@ const Generate = () => {
             console.log(likeState, likeCount);
         }
     }
+
+    const handleColorChange = (e) => {
+        const hex = e.target.value;
+        setColor(hex);
+        setRgb(hexToRgb(hex));
+        console.log(rgb, color)
+    }
+
+    const handleAdd = () => {
+        const newOptions = options;
+        
+    }
+
+    const handleRemove = () => {
+
+    }
     
     return (
-        <div className="container">
-            <Palette
-                colors={palette}
-                width={75}
-                likes={likeCount}
-                paletteId=""
-                tags=""
-                likeState={likeState}
-            />
+        <div className="generate-container">
+            <div className="generate-palette">
+                {loading ? 
+                    <div style={{width:"40vw", height:"40vw"}} className="generate-spinner">
+                        <TailSpin width="80" color="#F23557"/>
+                    </div>
+                    :
+                    <Palette
+                        colors={palette}
+                        width={40}
+                        likes={likeCount}
+                        paletteId=""
+                        tags=""
+                        likeState={likeState}
+                    />
+                }
+            </div>
+            <div className="generate-options-container">
+                <div>Add upto 5 colors:</div>
+                <div className="generate-add">
+                    <div style={{ display: "flex", alignItems: "center", maxWidth: "fit-content" }}>
+                        <div>{color}</div>
+                        <input
+                            type="color"
+                            value={color}
+                            onChange={(e) => handleColorChange(e)}
+                            className="color-picker"
+                        />
+                    </div>
+                    <div
+                        className="add-remove"
+                        onClick={handleAdd}
+                    >
+                        Add
+                    </div>
+                </div>
+                <div>Added Colors:</div>
+                <div className="generate-added-colors">
+                    {options.filter(color => color === "N").map((color, i) => 
+                        <div key={i}>
+                            <div>{color}</div>
+                            <div
+                                className="add-remove"
+                                onClick={handleRemove}
+                            >
+                                Remove
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
     )
 };

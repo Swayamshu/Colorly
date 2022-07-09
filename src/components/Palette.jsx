@@ -12,6 +12,7 @@ const Palette = (props) => {
     const [paletteId, setPaletteId] = useState(props.paletteId);
     const [likeCount, setLikeCount] = useState(props.likes);
     const [liked, setLiked] = useState(props.likeState);
+    const [className, setClassName] = useState("color-link");
 
     const likeToggle = (likeState) => {
         if (likeState) {
@@ -65,78 +66,78 @@ const Palette = (props) => {
             <div
                 className="palette"
                 style={{
-                    width: `${width}vh`,
-                    height: `${width}vh`,
+                    width: `${width}vw`,
+                    height: `${width}vw`,
                 }}
             >
-                <div 
-                    className="color" 
-                    style={{
-                        backgroundColor: colors[0],
-                        height: `${width}vh`,
-                        width: `${width}vh`
-                    }}
+                <CopyToClipboard
+                    text={colors[0]}
+                    onCopy={() => copy(colors[0])}
                 >
-                    <CopyToClipboard
-                        text={colors[0]}
-                        onCopy={() => copy(colors[0])}
+                    <div 
+                        className="color" 
+                        style={{
+                            backgroundColor: colors[0],
+                            height: `${width}vw`,
+                            width: `${width}vw`
+                        }}
                     >
                         <span className="color-link">
                             {colors[0]}
                         </span>
-                    </CopyToClipboard>
-                </div>
-                <div 
-                    className="color" 
-                    style={{
-                        backgroundColor: colors[1],
-                        height: `${width / 1.5}vh`,
-                        width: `${width}vh`
-                    }}
+                    </div>
+                </CopyToClipboard>
+                <CopyToClipboard
+                    text={colors[1]}
+                    onCopy={() => copy(colors[1])}
                 >
-                    <CopyToClipboard
-                        text={colors[1]}
-                        onCopy={() => copy(colors[1])}
+                    <div 
+                        className="color" 
+                        style={{
+                            backgroundColor: colors[1],
+                            height: `${width / 1.6}vw`,
+                            width: `${width}vw`
+                        }}
                     >
                         <span className="color-link">
                             {colors[1]}
                         </span>
-                    </CopyToClipboard>
-                </div>
-                <div 
-                    className="color" 
-                    style={{
-                        backgroundColor: colors[2],
-                        height: `${width / 2.8}vh`,
-                        width: `${width}vh`
-                    }}
+                    </div>
+                </CopyToClipboard>
+                <CopyToClipboard
+                    text={colors[2]}
+                    onCopy={() => copy(colors[2])}
                 >
-                    <CopyToClipboard
-                        text={colors[2]}
-                        onCopy={() => copy(colors[2])}
+                    <div 
+                        className="color" 
+                        style={{
+                            backgroundColor: colors[2],
+                            height: `${width / 2.8}vw`,
+                            width: `${width}vw`
+                        }}
                     >
                         <span className="color-link">
                             {colors[2]}
                         </span>
-                    </CopyToClipboard>
-                </div>
-                <div 
-                    className="color" 
-                    style={{
-                        backgroundColor: colors[3],
-                        height: `${width / 6}vh`,
-                        width: `${width}vh`
-                    }}
+                    </div>
+                </CopyToClipboard>
+                <CopyToClipboard
+                    text={colors[3]}
+                    onCopy={() => copy(colors[3])}
                 >
-                    <CopyToClipboard
-                        text={colors[3]}
-                        onCopy={() => copy(colors[3])}
+                    <div 
+                        className="color" 
+                        style={{
+                            backgroundColor: colors[3],
+                            height: `${width / 6.1}vw`,
+                            width: `${width}vw`
+                        }}
                     >
                         <span className="color-link">
                             {colors[3]}
                         </span>
-                    </CopyToClipboard>
-                </div>
+                    </div>
+                </CopyToClipboard>
             </div>
 
             <div className="palette-like">

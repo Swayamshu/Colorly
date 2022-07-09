@@ -6,12 +6,13 @@ import axios from "../utils/axios";
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-    const [paletteWidth, setPaletteWidth] = useState(130 / 3);
+    const [paletteWidth, setPaletteWidth] = useState(65.7 / 3);
     const [userId, setUserId] = useState(1);
     const [profileName, setProfileName] = useState("");
     const [profileAvatar, setProfileAvatar] = useState("#");
     const [cookies, setCookies, removeCookies] = useCookies(["auth"]);
     const [token, setTokenState] = useState(cookies.token);
+    const [loading, setLoading] = useState(false);
 
     const setToken = (newToken) => {
         setTokenState(newToken);
@@ -39,6 +40,7 @@ export const AuthProvider = ({ children }) => {
             .then((res) => {
                 setUserId(res.data.userId);
                 setProfileName(res.data.name);
+                console.log(profileName);
             })
             .catch((err) => {
                 toast.error(err.response.data);
@@ -59,7 +61,9 @@ export const AuthProvider = ({ children }) => {
                 setProfileAvatar,
                 logout,
                 paletteWidth,
-                setPaletteWidth
+                setPaletteWidth,
+                loading,
+                setLoading,
             }}
         >
             {children}

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useAuth } from '../context/auth';
 import { toast } from 'react-toastify';
 import NoAuthRequired from '../middleware/noAuthRequired';
+import { ReactComponent as Logo } from "../assets/colory.svg";
 
 const Register = () => {
     let navigate = useNavigate();
@@ -48,34 +49,45 @@ const Register = () => {
     
     return (
         <NoAuthRequired>
-            <div>
-                <h1>Register</h1>
-                <input 
-                    type="text"
-                    placeholder="name"
-                    onChange={handleNameChange}
-                    value={name}
-                />
-                <input 
-                    type="email"
-                    placeholder="email"
-                    onChange={handleEmailChange} 
-                    value={email}
-                />
-                <input 
-                    type="password"
-                    placeholder="password"
-                    onChange={handlePasswordChange}
-                    value={password} 
-                />
-                <button 
-                    type="submit"
-                    onClick={register}
-                >
-                    Register
-                </button>
+            <div className="auth-page">
+                <div className="auth-card">
+                    <div
+                        className="auth-logo-container"
+                        onClick={() => navigate("/")}
+                    >
+                        <Logo className="auth-logo"/>
+                    </div>
+                    <div className="auth-header">Register</div>
+                    <input 
+                        type="text"
+                        placeholder="name"
+                        onChange={handleNameChange}
+                        value={name}
+                        className="auth-input"
+                    />
+                    <input 
+                        type="email"
+                        placeholder="email"
+                        onChange={handleEmailChange} 
+                        value={email}
+                        className="auth-input"
+                    />
+                    <input 
+                        type="password"
+                        placeholder="password"
+                        onChange={handlePasswordChange}
+                        value={password} 
+                        className="auth-input"
+                    />
+                    <button 
+                        type="submit"
+                        onClick={register}
+                    >
+                        Register
+                    </button>
 
-                <div>Already registered? <a onClick={() => navigate("/login")}>Login</a></div>
+                    <div className="auth-card-text">Already registered? <a onClick={() => navigate("/login")}>Login</a></div>
+                </div>  
             </div>
         </NoAuthRequired>
  )

@@ -1,21 +1,18 @@
 import { Search } from "./Search"
 import { useNavigate } from "react-router-dom";
-// import logo from "../assets/logo.svg";
+import { useAuth } from "../context/auth";
+import {ReactComponent as Logo} from "../assets/colory.svg";
 
 const Header = () => {
     let navigate = useNavigate();
-
-    const routeChange = (path) => {
-        navigate(path);
-    }
+    const { profileName } = useAuth();
 
     return (
         <div className="navbar">
             <div
-                className="logo"
-                onClick={() => routeChange("/")}
+                onClick={() => navigate("/")}
             >
-                coolor.io
+                <Logo className="logo" />
             </div>
             <input
                 className="search-box"
@@ -23,6 +20,16 @@ const Header = () => {
                 placeholder="Search Palettes"
             >
             </input>
+            <div
+                className="profile-info"
+            >
+                <div className="profile-name">{profileName}</div>
+                {/* <div className="dropdown">
+                    <div className="dropdown-content">
+                        Logout
+                    </div>
+                </div> */}
+            </div>
         </div>
     )
 };
