@@ -1,4 +1,4 @@
-import { Search } from "./Search"
+import { Search } from "."
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import {ReactComponent as Logo} from "../assets/colory.svg";
@@ -14,12 +14,7 @@ const Header = () => {
             >
                 <Logo className="logo" />
             </div>
-            <input
-                className="search-box"
-                type="text"
-                placeholder="Search Palettes"
-            >
-            </input>
+            <Search />
             <div
                 className="profile-info"
             >

@@ -1,5 +1,6 @@
 import { AiOutlineHeart as Heart, AiFillHeart as FilledHeart } from 'react-icons/ai';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
+import { useLocation } from 'react-router';
 import { toast } from 'react-toastify';
 import axios from '../utils/axios';
 import { useAuth } from '../context/auth';
@@ -18,6 +19,7 @@ const Palette = (props) => {
     const [likeCount, setLikeCount] = useState(props.likes);
     const [liked, setLiked] = useState(props.likeState);
     const [className, setClassName] = useState("color-link");
+    let path = useLocation().pathname;
 
     const likeToggle = (likeState) => {
         if (likeState) {
@@ -45,8 +47,8 @@ const Palette = (props) => {
         if (likeState === false) {
             axios.patch("/palette", paletteData)
                 .then((res) => {
-                    console.log("saved");
-                    console.log(res.data);
+                    // console.log("saved");
+                    // console.log(res.data);
                 })
                 .catch((err) => {
                     toast.error(err.response.data);
@@ -54,8 +56,11 @@ const Palette = (props) => {
         } else {
             axios.patch("/palette/unsave", paletteData)
                 .then((res) => {
-                    console.log("unsaved");
-                    console.log(res.data);
+                    if (path === "/Collection") {
+                        window.location.reload(false);
+                    }
+                    // console.log("unsaved");
+                    // console.log(res.data);
                 })
                 .catch((err) => {
                     toast.error(err.response.data);
@@ -64,9 +69,6 @@ const Palette = (props) => {
     }
 
     const copy = (str) => {
-        // const copyTimeout = setTimeout(() => {
-        //     const element = 
-        // })
         toast.success("Color Copied!");
     }
 

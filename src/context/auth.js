@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
     const [cookies, setCookies, removeCookies] = useCookies(["auth"]);
     const [token, setTokenState] = useState(cookies.token);
     const [loading, setLoading] = useState(false);
+    const [searchedPalettes, setSearchedPalettes] = useState([]);
 
     const setToken = (newToken) => {
         setTokenState(newToken);
@@ -63,6 +64,8 @@ export const AuthProvider = ({ children }) => {
                 setPaletteWidth,
                 loading,
                 setLoading,
+                searchedPalettes,
+                setSearchedPalettes,
             }}
         >
             {children}

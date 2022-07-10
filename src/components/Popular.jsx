@@ -5,22 +5,28 @@ import { TailSpin } from "react-loader-spinner";
 import axios from "../utils/axios";
 
 const Popular = () => {
-    const { paletteWidth, loading, setLoading } = useAuth();
+    const { paletteWidth, loading, setLoading, searchedPalettes } = useAuth();
     const [popularPalettes, setPopularPalettes] = useState([]);
 
     useEffect(() => {
         setLoading(true);
         axios.post("/palette/popular", {
-                numResults: 100,
-            })
+            numResults: 100,
+        })
             .then(res => {
                 setPopularPalettes(res.data);
+                // console.log(res.data)
             })
             .catch(err => {
                 console.error(err);
             })
             .finally(() => setLoading(false));
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        setPopularPalettes(searchedPalettes);
+        console.log(searchedPalettes);
+    }, [searchedPalettes]);
 
     return (
         <div>
