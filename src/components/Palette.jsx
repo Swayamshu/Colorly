@@ -68,6 +68,29 @@ const Palette = (props) => {
         }
     }
 
+    const hexToRgb = (hex) => {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? [
+            parseInt(result[1], 16),
+            parseInt(result[2], 16),
+            parseInt(result[3], 16)
+        ] : [];
+    }
+
+    const getLightOrDark = (hex) => {
+        const rgb = hexToRgb(hex);
+        const [r, g, b] = rgb;
+        const hsp = Math.sqrt(
+            0.299 * (r * r) +
+            0.587 * (g * g) +
+            0.114 * (b * b)
+        );
+        if (hsp > 180) {
+            return "#000000"; // color is light
+        }
+        return "#ffffff" // color is dark
+    }
+    
     const copy = (str) => {
         toast.success("Color Copied!");
     }
@@ -93,7 +116,10 @@ const Palette = (props) => {
                             width: `${width}vw`
                         }}
                     >
-                        <span className="color-link">
+                        <span 
+                            style={{ color: getLightOrDark(colors[0]) }} 
+                            className="color-link"
+                        >
                             {colors[0]}
                         </span>
                     </div>
@@ -110,7 +136,10 @@ const Palette = (props) => {
                             width: `${width}vw`
                         }}
                     >
-                        <span className="color-link">
+                        <span
+                            style={{ color: getLightOrDark(colors[1]) }}
+                            className="color-link"
+                        >
                             {colors[1]}
                         </span>
                     </div>
@@ -127,7 +156,10 @@ const Palette = (props) => {
                             width: `${width}vw`
                         }}
                     >
-                        <span className="color-link">
+                        <span 
+                            style={{ color: getLightOrDark(colors[2]) }} 
+                            className="color-link"
+                        >
                             {colors[2]}
                         </span>
                     </div>
@@ -144,7 +176,10 @@ const Palette = (props) => {
                             width: `${width}vw`
                         }}
                     >
-                        <span className="color-link">
+                        <span 
+                            style={{ color: getLightOrDark(colors[3]) }} 
+                            className="color-link"
+                        >
                             {colors[3]}
                         </span>
                     </div>
