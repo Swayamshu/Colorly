@@ -1,8 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Header, Layout, Sidebar, Window, Popular, Generate, Random, Collection } from "./components";
+import { Layout, Popular, Generate, Random, Collection, New, Scheme } from "./components";
 import { Login, Profile, Register } from "./Auth";
-import { AuthProvider } from "./context/auth";
 
 function App() {
   return (
@@ -34,6 +33,15 @@ function App() {
             </div>}
           />
           <Route
+            path="/new"
+            element={<div>
+              <Layout />
+              <div className="window">
+                <New />
+              </div>
+            </div>}
+          />
+          <Route
             path="/generate"
             element={<div>
               <Layout />
@@ -48,6 +56,15 @@ function App() {
               <Layout />
               <div className="window">
                 <Random />
+              </div>
+            </div>}
+          />
+          <Route
+            path="/scheme"
+            element={<div>
+              <Layout />
+              <div className="window">
+                <Scheme />
               </div>
             </div>}
           />

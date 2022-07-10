@@ -43,6 +43,7 @@ const Collection = () => {
                             likes={palette.likes}
                             likeState={true}
                             paletteId={palette._id}
+                            title={palette.title}
                         />
                     )
                 }

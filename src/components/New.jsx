@@ -4,17 +4,17 @@ import { useAuth } from "../context/auth";
 import { TailSpin } from "react-loader-spinner";
 import axios from "../utils/axios";
 
-const Popular = () => {
+const New = () => {
     const { paletteWidth, loading, setLoading } = useAuth();
-    const [popularPalettes, setPopularPalettes] = useState([]);
+    const [newPalettes, setNewPalettes] = useState([]);
 
     useEffect(() => {
         setLoading(true);
-        axios.post("/palette/popular", {
+        axios.post("/palette/new", {
                 numResults: 100,
             })
             .then(res => {
-                setPopularPalettes(res.data);
+                setNewPalettes(res.data);
             })
             .catch(err => {
                 console.error(err);
@@ -30,7 +30,7 @@ const Popular = () => {
                         <TailSpin width="80" color="#F23557"/>
                     </div>
                     :
-                    popularPalettes.map((palette, i) =>
+                    newPalettes.map((palette, i) =>
                         <Palette
                             key={i}
                             colors={palette.colors}
@@ -48,4 +48,4 @@ const Popular = () => {
     )
 };
 
-export default Popular;
+export default New;

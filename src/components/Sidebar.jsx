@@ -1,6 +1,8 @@
 import { useNavigate, useLocation } from "react-router";
 import { useAuth } from "../context/auth";
 import { BsStar, BsStarFill, BsPen, BsPenFill, BsShuffle, BsHeart, BsHeartFill } from "react-icons/bs";
+import { IoColorFilterOutline } from "react-icons/io5";
+import { AiFillFire, AiOutlineFire } from "react-icons/ai";
 
 const Sidebar = () => {
     let navigate = useNavigate();
@@ -15,10 +17,20 @@ const Sidebar = () => {
                     className={path === "/" ? "selected-sidebar" : ""}
                 >
                     {path === "/" ?
+                        <AiFillFire className="sidebar-icons-2" />
+                        :
+                        <AiOutlineFire className="sidebar-icons-2" />
+                    } Popular
+                </li>
+                <li
+                    onClick={() => navigate("/new")}
+                    className={path === "/new" ? "selected-sidebar" : ""}
+                >
+                    {path === "/new" ?
                         <BsStarFill className="sidebar-icons" />
                         :
                         <BsStar className="sidebar-icons" />
-                    } Popular
+                    } New
                 </li>
                 <li
                     onClick={() => navigate("/Generate")}
@@ -37,6 +49,12 @@ const Sidebar = () => {
                     <BsShuffle className="sidebar-icons"/> Random
                 </li>
                 <li
+                    onClick={() => navigate("/scheme")}
+                    className={path === "/scheme" ? "selected-sidebar" : ""}
+                >
+                    <IoColorFilterOutline className="sidebar-icons-2" /> Scheme
+                </li>
+                <li
                     onClick={() => navigate("/Collection")}
                     className={path === "/Collection" ? "selected-sidebar" : ""}
                 >
@@ -47,9 +65,6 @@ const Sidebar = () => {
                     } Collection
                 </li>
             </ul>
-            {/* <div style={{display:"flex", justifyContent:"center"}}>
-                <hr />
-            </div> */}
             {token ?
                 <button
                     className="login-logout-btn"

@@ -2,61 +2,57 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/auth";
 import { Palette } from "./";
 import { TailSpin } from "react-loader-spinner";
+import axios from "../utils/axios";
 
 const Random = () => {
     const { paletteWidth, loading, setLoading } = useAuth();
-    const [paletteType, setPaletteType] = useState("Random");
-    const [randomPalettes, setRandomPalettes] = useState([]);
+    const [randomPalette, setRandomPalette] = useState({ id: 2439624, title: 'Pick your orange.', numVotes: 2, colors: [] });
 
-    const axios = require("axios");
-
-    const options = {
-        method: 'GET',
-        url: `https://random-palette-generator.p.rapidapi.com/palette/100/4`,
-        headers: {
-            'X-RapidAPI-Key': '124d5d93f5msh15031b5a949a625p1bc8b7jsnfc43bcf6c50a',
-            'X-RapidAPI-Host': 'random-palette-generator.p.rapidapi.com'
-        }
-    };
-
-    useEffect(() => {
+    const getNewPalette = () => {
         setLoading(true);
-        axios.request(options)
+        axios.get("/palette/random")
             .then(res => {
-                setRandomPalettes(res.data.data);
-                setPaletteType(res.data.type);
+                setRandomPalette(res.data[0]);
             })
             .catch(err => {
                 console.error(err);
             })
             .finally(() => setLoading(false));
+    }
+    
+    useEffect(() => {
+        window.addEventListener("keydown", keyDownHandler);
+        getNewPalette();
+
+        return () => {
+            window.removeEventListener("keydown", keyDownHandler);
+        }
     }, []);
+
+    const keyDownHandler = (e) => {
+        if (e.code === "Space") {
+            getNewPalette();
+        }
+    }
     
     return (
         <div className="random-container">
-            <div className="container">
+            <div className="random-screen">
                 {loading ?
                     <div className="spinner">
                         <TailSpin width="80" color="#F23557"/>
                     </div>
                     :
-                    randomPalettes.map((palette, i) => 
-                        <Palette
-                            key={i}
-                            colors={palette.palette}
-                            width={paletteWidth}
-                            likes={0}
-                            paletteId=""
-                            tags=""
-                            likeState={false}
-                        />
-                    )
+                    <Palette
+                        colors={randomPalette.colors}
+                        width={35}
+                        likes={randomPalette.numVotes}
+                        title={randomPalette.title}
+                        paletteId=""
+                        tags=""
+                        likeState={false}
+                    />
                 }
-            </div>
-            <div className="random-options-container">
-                <div className="">
-                    <div className="palette-type">{paletteType.toUpperCase()}</div>
-                </div>
             </div>
         </div>
     )

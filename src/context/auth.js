@@ -6,7 +6,7 @@ import axios from "../utils/axios";
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-    const [paletteWidth, setPaletteWidth] = useState(65.7 / 3);
+    const [paletteWidth, setPaletteWidth] = useState(60 / 3);
     const [userId, setUserId] = useState(1);
     const [profileName, setProfileName] = useState("");
     const [profileAvatar, setProfileAvatar] = useState("#");

@@ -6,5 +6,7 @@ export { default as Search } from "./Search";
 export { default as Palette } from "./Palette";
 export { default as Sidebar } from "./Sidebar";
 export { default as Random } from "./Random";
-export { default as Layout } from "./Layout";
 export { default as Window } from "./Window";
+export { default as New } from "./New";
+export { default as Scheme } from "./Scheme";
+export { default as Layout } from "./Layout";

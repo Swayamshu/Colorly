@@ -102,22 +102,22 @@ const Generate = () => {
         <div className="generate-container">
             <div className="generate-palette">
                 {loading ? 
-                    <div style={{width:"40vw", height:"40vw"}} className="generate-spinner">
+                    <div style={{width:"37.1vw", height:"35vw"}} className="generate-spinner">
                         <TailSpin width="80" color="#F23557"/>
                     </div>
                     :
                     <Palette
                         colors={palette}
-                        width={40}
+                        width={35}
                         likes={likeCount}
                         paletteId=""
                         tags=""
                         likeState={likeState}
-                    />
+                     />
                 }
             </div>
             <div className="generate-options-container">
-                <div className="generate-desc">Hit the Spacebar to generate palettes!<br/><br/>Add upto 5 colors and generate colour palettes based on added colours.</div>
+                <div className="generate-desc">Hit the Spacebar to generate new palettes!<br/><br/>Add upto 5 colors and we will generate colour palettes using deep learning, based on colours added.</div>
                 <div className="generate-add">
                     <div style={{ display: "flex", alignItems: "center", maxWidth: "fit-content" }}>
                         <input
@@ -138,7 +138,7 @@ const Generate = () => {
                 <div>Added Colors:</div>
                 <div className="generate-added-colors">
                     {options.filter(color => color !== "N").map((color, i) => 
-                        <div key={i}>
+                        <div key={i} className="added-colors">
                             <div style={{ display: "flex", alignItems: "center", maxWidth: "fit-content" }}>
                                 <div
                                     className="color-picker"

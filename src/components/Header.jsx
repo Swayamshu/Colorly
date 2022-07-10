@@ -24,11 +24,6 @@ const Header = () => {
                 className="profile-info"
             >
                 <div className="profile-name">{profileName}</div>
-                {/* <div className="dropdown">
-                    <div className="dropdown-content">
-                        Logout
-                    </div>
-                </div> */}
             </div>
         </div>
     )

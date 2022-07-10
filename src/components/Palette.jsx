@@ -7,7 +7,12 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const Palette = (props) => {
     const { userId } = useAuth();
-    const colors = props.colors;
+    const colors = props.colors.map(color => {
+        if (color[0] !== '#') 
+            return color = '#' + color;
+        return color;
+    });
+    const paletteTitle = props.title;
     const width = props.width;
     const [paletteId, setPaletteId] = useState(props.paletteId);
     const [likeCount, setLikeCount] = useState(props.likes);
@@ -22,7 +27,10 @@ const Palette = (props) => {
         }
         setLiked(prevState => !prevState);
         setLikeCount(prevCount => {
-            if (likeState) return prevCount - 1;
+            if (likeState) {
+                if (prevCount <= 1) return 0;
+                return prevCount - 1
+            };
             return prevCount + 1;
         });
 
@@ -31,6 +39,7 @@ const Palette = (props) => {
             colors: colors,
             likedByUser: userId,
             likes: likeCount,
+            title: paletteTitle
         }
         
         if (likeState === false) {
@@ -141,13 +150,17 @@ const Palette = (props) => {
             </div>
 
             <div className="palette-like">
-                <div onClick={() => likeToggle(liked)}>
+                <div
+                    className="like-icon"
+                    onClick={() => likeToggle(liked)}
+                >
                     {(liked) ? <FilledHeart /> : <Heart />}
                 </div>
                 <div className="likes-count">
                     {likeCount}
                 </div>
             </div>
+            <div className="palette-desc">{paletteTitle}</div>
         </div>
     )
 }
