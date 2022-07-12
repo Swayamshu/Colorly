@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from '../utils/axios';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../context/auth';
 import { toast } from 'react-toastify';
 import NoAuthRequired from '../middleware/noAuthRequired';
-import { ReactComponent as Logo } from "../assets/colory.svg";
+import { ReactComponent as Logo } from "../assets/colorly-01.svg";
 
 const Register = () => {
     let navigate = useNavigate();

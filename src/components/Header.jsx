@@ -1,7 +1,7 @@
 import { Search } from "."
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
-import {ReactComponent as Logo} from "../assets/colory.svg";
+import { ReactComponent as Logo } from "../assets/colorly-01.svg";
 
 const Header = () => {
     let navigate = useNavigate();

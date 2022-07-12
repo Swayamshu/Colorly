@@ -365,8 +365,8 @@ hr {
 
 .auth-logo {
     cursor: pointer;
-    width: 17vw;
-    margin: -1vw 0 0;
+    width: 20vw;
+    margin: 1vw 0 3vw;
 }
 
 .auth-header {
