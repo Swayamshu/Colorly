@@ -65,26 +65,28 @@ const Sidebar = () => {
                     } Collection
                 </li>
             </ul>
-            {token ?
-                <button
-                    className="login-logout-btn"
-                    type="submit"
-                    onClick={() => {
-                        logout();
-                        navigate("/login");
-                    }}
-                >
-                    Logout
-                </button>
-                :
-                <button
-                    className="login-logout-btn"
-                    type="submit"
-                    onClick={() => navigate("/login")}
-                >
-                    Login
-                </button>
-            }
+            <div className="login-logout-container">
+                {token ?
+                    <button
+                        className="login-logout-btn"
+                        type="submit"
+                        onClick={() => {
+                            logout();
+                            navigate("/login");
+                        }}
+                    >
+                        Logout
+                    </button>
+                    :
+                    <button
+                        className="login-logout-btn"
+                        type="submit"
+                        onClick={() => navigate("/login")}
+                    >
+                        Login
+                    </button>
+                }
+            </div>
         </div>
     )
 };
